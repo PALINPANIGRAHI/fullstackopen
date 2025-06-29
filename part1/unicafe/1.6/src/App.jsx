@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
-const Button=({handleClick,text})=>{
+
+const App = () => {
+  const Button=({handleClick,text})=>{
   return <button onClick={handleClick}>{text}</button>
 }
 
@@ -23,7 +25,6 @@ const Statistics=({good,neutral,bad})=>{
     </table>
   )
 }
-const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
