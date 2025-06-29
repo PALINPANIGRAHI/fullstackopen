@@ -30,6 +30,17 @@ const Statistics=({good,neutral,bad})=>{
   )
 }
 const App = () => {
+  const Button=({handleClick,text})=>{
+  return <button onClick={handleClick}>{text}</button>
+}
+
+const StatisticsLine=({text,value})=>{
+  return(
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>)
+}
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
