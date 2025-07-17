@@ -1,19 +1,19 @@
 {
-  "notes": [
+  "persons": [
     {
-      "id": "1",
-      "content": "HTML is easy",
-      "important": true
+      "name": "Arto Hellas",
+      "number": "576879",
+      "id": "1"
     },
     {
-      "id": "2",
-      "content": "Browser can execute only JavaScript",
-      "important": false
+      "name": "Ada Lovelace",
+      "number": "39-44-5323523",
+      "id": "2"
     },
     {
-      "id": "3",
-      "content": "GET and POST are the most important methods of HTTP protocol",
-      "important": true
+      "id": "43ce",
+      "name": "Palin Panigrahi",
+      "number": "6371551027"
     }
   ]
 }
