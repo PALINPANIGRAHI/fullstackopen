@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "morgan": "^1.10.1"
+  },
+  "name": "3.7",
+  "version": "0.0.1",
+  "description": "\"\"",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "\"\\\"\\\\\\\"\\\\\\\\\\\\\\\"echo \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Error: no test specified\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" && exit 1\\\\\\\\\\\\\\\"\\\\\\\"\\\"\"",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": " \"\\\"git+https://github.com/PALINPANIGRAHI/fullstackopen.git\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\""
+  },
+  "keywords": [
+    "backend",
+    "morgan",
+    "middleware",
+    "fullstack"
+  ],
+  "author": "\"Palin Panigrahi\"",
+  "license": "ISC"
+}
