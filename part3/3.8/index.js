@@ -3,6 +3,10 @@ const morgan=require('morgan')
 const app=express()
 app.use(express.json())
 
+const cors = require('cors')
+
+app.use(cors())
+
 morgan.token('body',(req)=>{
     return req.method==='POST' ? JSON.stringify(req.body) :''
 })
@@ -31,6 +35,7 @@ let persons=[
       "number": "39-23-6423122"
     }
 ]
+
 //to print in the frontend
 app.get('/info',(request,response)=>{
     const date=new Date()
@@ -38,7 +43,7 @@ app.get('/info',(request,response)=>{
         <p>${date}</p>`)
 })
 //to create an array in json format
-app.get('/api/persons',(requset,response)=>{
+app.get('/api/persons',(request,response)=>{
     response.json(persons)
 })
 //to display all the info in the backend through id also
@@ -76,7 +81,7 @@ app.post('/api/persons',(request,response)=>{
     if(!body.name || !body.number){
         return response.status(400).json({
             error: 'name must be unique'
-    })
+    })}
 
     // Check if name already exists
   const nameExists = persons.find(p => p.name === body.name)
@@ -93,7 +98,7 @@ app.post('/api/persons',(request,response)=>{
       error: 'number must be unique'
     })
   }
-}
+
 
 
 
