@@ -1,126 +1,75 @@
-const express=require('express')
-const morgan=require('morgan')
-const app=express()
-app.use(express.json())
-
+const express = require('express')
+const morgan = require('morgan')
 const cors = require('cors')
+const path = require('path')
 
-app.use(cors())
+const app = express()
 
-morgan.token('body',(req)=>{
-    return req.method==='POST' ? JSON.stringify(req.body) :''
-})
-
-app.use(morgan(':method :url :status :req[content-length]- :response-time ms :body'))
-
-let persons=[
-    { 
-      "id": "1",
-      "name": "Arto Hellas", 
-      "number": "040-123456"
-    },
-    { 
-      "id": "2",
-      "name": "Ada Lovelace", 
-      "number": "39-44-5323523"
-    },
-    { 
-      "id": "3",
-      "name": "Dan Abramov", 
-      "number": "12-43-234345"
-    },
-    { 
-      "id": "4",
-      "name": "Mary Poppendieck", 
-      "number": "39-23-6423122"
-    },
-    { 
-      "id": "5",
-      "name": "Palin Panigrahi", 
-      "number": "39-23-6423122"
-    }
-
+let persons = [
+  { id: "1", name: "Arto Hellas", number: "040-123456" },
+  { id: "2", name: "Ada Lovelace", number: "39-44-5323523" },
+  { id: "3", name: "Dan Abramov", number: "12-43-234345" },
+  { id: "4", name: "Mary Poppendieck", number: "39-23-6423122" },
+  { id: "5", name: "Palin Panigrahi", number: "39-23-6423122" }
 ]
 
-//to print in the frontend
-app.get('/info',(request,response)=>{
-    const date=new Date()
-    response.send(`<p>Phonebook has info for ${persons.length} people</p>
-        <p>${date}</p>`)
+app.use(cors())
+app.use(express.json())
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+
+// 🔥 SERVE FRONTEND BUILD
+app.use(express.static('dist'))
+
+// ---------- API ROUTES ----------
+app.get('/info', (req, res) => {
+  const date = new Date()
+  res.send(`
+    <p>Phonebook has info for ${persons.length} people</p>
+    <p>${date}</p>
+  `)
 })
-//to create an array in json format
-app.get('/api/persons',(request,response)=>{
-    response.json(persons)
+
+app.get('/api/persons', (req, res) => {
+  res.json(persons)
 })
-//to display all the info in the backend through id also
-app.get('/api/persons/:id',(request,response)=>{
-    const id=request.params.id
-    const person=persons.find(p=>p.id===id)
-    if(person){
-        response.json(person)
-    }else{
-        response.status(404).end()
-    }
+
+app.get('/api/persons/:id', (req, res) => {
+  const person = persons.find(p => p.id === req.params.id)
+  person ? res.json(person) : res.status(404).end()
 })
-//delte data
-app.delete('/api/persons/:id', (request, response) => {
-  const id = request.params.id.toString()
-  const initialLength = persons.length
 
-  persons = persons.filter(person => person.id !== id)
-
-  if (persons.length < initialLength) {
-    response.status(204).end()
-  } else {
-    response.status(404).send({ error: 'Person not found' })
-  }
-})
-//add data
-function getId(max){
-    return Math.floor(Math.random()*max);
-}
-
-app.post('/api/persons',(request,response)=>{
-    const body=request.body
-
-    //error message for name or number is missing and if number already exists in phonebook
-    if(!body.name || !body.number){
-        return response.status(400).json({
-            error: 'name must be unique'
-    })}
-
-    // Check if name already exists
-  const nameExists = persons.find(p => p.name === body.name)
-  if (nameExists) {
-    return response.status(400).json({
-      error: 'name must be unique'
-    })
+app.post('/api/persons', (req, res) => {
+  const body = req.body
+  if (!body.name || !body.number) {
+    return res.status(400).json({ error: 'name or number missing' })
   }
 
-  // Check if number already exists
-  const numberExists = persons.find(p => p.number === body.number)
-  if (numberExists) {
-    return response.status(400).json({
-      error: 'number must be unique'
-    })
+  if (persons.find(p => p.name === body.name)) {
+    return res.status(400).json({ error: 'name must be unique' })
   }
 
-
-
-
-  const person= {
+  const person = {
+    id: Math.floor(Math.random() * 100000).toString(),
     name: body.name,
-    
-    number: body.number,
-    id: getId(100000),
+    number: body.number
   }
 
   persons = persons.concat(person)
-
-  response.json(person)
+  res.json(person)
 })
 
-const PORT=3001
-app.listen(PORT,()=>{
-    console.log(`Server running in port ${PORT}`)
+app.delete('/api/persons/:id', (req, res) => {
+  persons = persons.filter(p => p.id !== req.params.id)
+  res.status(204).end()
+})
+
+// 🔥 SPA FALLBACK
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'))
+})
+
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
 })
