@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongoose": "^8.21.0",
+    "morgan": "^1.10.1"
+  },
+  "name": "3.8",
+  "version": "0.0.1",
+  "description": "\"\"",
+  "main": "index.js",
+  "scripts": {
+    "test": " \"echo \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Error: no test specified\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" && exit 1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\" \\\"\\\\\\\"git+https://github.com/PALINPANIGRAHI/fullstackopen.git\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"\\\"\""
+  },
+  "keywords": [
+    "morgan",
+    "tokens",
+    "backend",
+    "fullstack"
+  ],
+  "author": "\"Palin Panigrahi\"",
+  "license": "ISC"
+}
