@@ -1,32 +1,49 @@
-const mongoose=require('mongoose')
+const mongoose=require('mongoose');
 
 if(process.argv.length<3){
-    console.log('give password as an arguement')
+    console.log("give password as arguement");
+
+    process.exit(1);
+
 }
 
-const password=process.argv[2]
+const password=process.argv[2];
 
-const url=`mongodb+srv://Phoneboook:${password}@cluster0.hvtajgp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+const url=`mongodb+srv://Phoneboook:${password}@cluster0.hvtajgp.mongodb.net/phonebook?retryWrites=true&w=majority`;
 
-mongoose.set('strictQuery',false)
+mongoose.set('strictQuery',false);
 
-mongoose.connect(url)
+mongoose.connect(url);
 
-const noteSchema=new mongoose.Schema({
-    id: String,
-    name: String,
-    number: String,
-})
+const personSchema=new mongoose.Schema({
+    name:String,
+    number:String,
+});
 
-const Note =mongoose.model('Note',noteSchema)
+const Person=mongoose.model('Person',personSchema);
 
-const note=new Note({
-    id: "5",
-    name: "Sohail",
-    number: "6371551027",
-})
+if(process.argv.length===3){
+    console.log("phonebook:");
+    Person.find({}).then(persons=>{
+        persons.forEach(p=>{
+            console.log(`${p.name} ${p.number}`);
+        });
+        mongoose.connection.close();
+    });
+}
 
-note.save().then(result=>{
-    console.log('note saved!')
-    mongoose.connection.close()
-})
+
+if(process.argv.length===5){
+    const name=process.argv[3];
+    const number=process.argv[4];
+
+    const person=new Person({
+        name:name,
+        number:number,
+    });
+
+    person.save().then(result=>{
+        console.log(`added ${name} number ${number} to phonebook`);
+        mongoose.connection.close();
+    });
+}   

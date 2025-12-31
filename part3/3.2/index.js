@@ -34,7 +34,7 @@ app.get('/info',(request,response)=>{
 app.get('/api/persons',(requset,response)=>{
     response.json(persons)
 })
-//to display all the info in the backend
+//to display all the info in the backend 
 app.get('/api/persons',(request,response)=>{
     const id=request.params.id
     const person=persons.find(p=>p.id===id)
